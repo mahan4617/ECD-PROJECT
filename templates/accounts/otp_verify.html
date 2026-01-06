@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="col-md-5">
+    <div class="card">
+      <div class="card-body">
+        
+        <div class="login-icon-container">
+          <i class="bi bi-shield-lock login-icon"></i>
+        </div>
+
+        <h3 class="text-center mb-1">MFA Verification</h3>
+        <p class="text-center text-muted mb-4">Enter the OTP sent to your email</p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post">
+          {% csrf_token %}
+          
+          <div class="mb-3">
+            <label for="otp" class="form-label">One-Time Password</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-key"></i></span>
+              <input type="text" name="otp" class="form-control" placeholder="123456" required>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-4">
+            <span class="text-muted small">Step 2 of 2</span>
+            <div class="progress-container flex-grow-1 ms-3" style="margin-bottom: 0; margin-top: 0;">
+                <div class="progress-step active"></div>
+                <div class="progress-step active"></div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" type="submit">Verify & Login</button>
+        </form>
+        
+        <div class="text-center mt-4">
+          <span class="text-muted">Didn't receive code? <a href="{% url 'resend_otp' %}">Resend OTP</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

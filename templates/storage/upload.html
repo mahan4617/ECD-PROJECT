@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Upload File</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                {{ form.errors }}
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="{{ form.file.id_for_label }}" class="form-label">File</label>
+                            {{ form.file }}
+                            <div class="form-text">Select the file you want to upload and encrypt.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.cover_image.id_for_label }}" class="form-label">Cover Image</label>
+                            {{ form.cover_image }}
+                            <div class="form-text">Select an image to hide your encrypted file inside (Steganography).</div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Upload & Encrypt</button>
+                            <a href="{% url 'file_list' %}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

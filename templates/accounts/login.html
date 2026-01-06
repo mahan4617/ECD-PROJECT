@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="col-md-5">
+    <div class="card">
+      <div class="card-body">
+        
+        <div class="login-icon-container">
+          <i class="bi bi-box-arrow-in-right login-icon"></i>
+        </div>
+
+        <h3 class="text-center mb-1">Login</h3>
+        <p class="text-center text-muted mb-4">Enter your credentials to continue</p>
+
+        <form method="post">
+          {% csrf_token %}
+          
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+              {% for error in form.non_field_errors %}
+                {{ error }}
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <div class="mb-3">
+            <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-person"></i></span>
+              {{ form.username }}
+            </div>
+            {% if form.username.errors %}
+              <div class="text-danger small mt-1">{{ form.username.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+              {{ form.email }}
+            </div>
+            {% if form.email.errors %}
+              <div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label for="{{ form.password.id_for_label }}" class="form-label">Password</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-lock"></i></span>
+              {{ form.password }}
+            </div>
+            {% if form.password.errors %}
+              <div class="text-danger small mt-1">{{ form.password.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-4">
+            <span class="text-muted small">Step 1 of 2</span>
+            <div class="progress-container flex-grow-1 ms-3" style="margin-bottom: 0; margin-top: 0;">
+                <div class="progress-step active"></div>
+                <div class="progress-step inactive"></div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" type="submit">Continue to MFA</button>
+        </form>
+        
+        <div class="text-center mt-4">
+          <span class="text-muted">Don't have an account? <a href="/accounts/register/">Register</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
